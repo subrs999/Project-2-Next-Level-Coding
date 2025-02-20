@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    width: 2048px;
+    height: 2048px;
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.Box{
+    float:left;
+
+    font-family: "Rubik", serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 18px;
+    box-sizing: border-box;
+    
+    text-align: center;
+    border-radius: 10px;
+    padding: 0px 20px 0px 20px;
+    margin: 0px 2.5px 0 2.5px;
+    height: 75px;
+    line-height: 65px;;
+    transition: ease-out 1s;
+}
+
+.Israel{
+    background-color: #2A82D7;
+    color: #ffffff;
+    -webkit-text-stroke: 1px #0038b8;
+    text-shadow: 0px 1px 0px #0038b8, 0px 2px 0px #0038b8, 0px 3px 0px #0038b8, 0px 4px 0px #0038b8, 0px 5px 0px #0038b8, 0px 6px 0px #0038b8;
+}
+
+.Iran{
+    background-color: #239F40;
+    color: #ffffff;
+    -webkit-text-stroke: 1px #DA0000;
+    text-shadow: 0px 1px 0px #DA0000, 0px 2px 0px #DA0000, 0px 3px 0px #DA0000, 0px 4px 0px #DA0000, 0px 5px 0px #DA0000, 0px 6px 0px #DA0000;
+}
+
+.Saudi{
+    background-color: #239F40;
+    color: #ffffff;
+    -webkit-text-stroke: 1px #005430;
+    text-shadow: 0px 1px 0px #005430, 0px 2px 0px #005430, 0px 3px 0px #005430, 0px 4px 0px #005430, 0px 5px 0px #005430, 0px 6px 0px #005430;
+}
+
+.Palestine{
+    background-color: #EE2A35;
+    color: #000000;
+    -webkit-text-stroke: 1px #009736;
+    text-shadow: 0px 1px 0px #009736, 0px 2px 0px #009736, 0px 3px 0px #009736, 0px 4px 0px #009736, 0px 5px 0px #009736, 0px 6px 0px #009736;
+}
+
+#usa{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: #000000;
+    width: 500px;
+    height: 500px;
+    border-radius: 100%;
+    position: absolute;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+
+    transition-property: transform, opacity;
+    transition-duration: 1s;
+    transition-timing-function: ease-out;
+}
+
+#usa h1{
+    font-family: "Times New Roman", serif;
+    font-weight: 400;
+    font-size: 24px;
+    color: #ffffff;
+    width: 150px;
+}
