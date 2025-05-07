@@ -16,27 +16,6 @@ document.documentElement.onmousemove = function(event){
     currentEvent=event;
 }
 
-setInterval(function(){
-    if(prevEvent && currentEvent) {
-        var movementX = Math.abs(currentEvent.screenX-prevEvent.screenX);
-        var movementY = Math.abs(currentEvent.screenY-prevEvent.screenY);
-        var movement = Math.sqrt((movementX*movementX) + (movementY*movementY));
-        
-        var speed = 10*movement;
-
-        if (speed>350) {
-            document.getElementById('usa').style.transform = 'scale(0)'
-            document.getElementById('usa').style.opacity = '0';
-        }
-        else{
-            document.getElementById('usa').style.transform = 'scale(1)';
-            document.getElementById('usa').style.opacity = '1';
-        }
-    }
-
-    prevEvent=currentEvent;
-}, 100);
-
 // Function to get a random word from an array
 function getRandomWord(arr) {
     const randomIndex = Math.floor(Math.random() * arr.length);
@@ -61,25 +40,34 @@ function getRandomColors(arr) {
 // Function to create a random number of boxes in the container
 function generateBoxes(numBoxes) {
     const container = document.querySelector('.container');
-    const countries = ['Israel', 'Palestine', 'Saudi', 'Iran']; // Array of possible country classes
+    const countries = ['Israel', 'Palestine', 'Saudi', 'Iran'];
 
-    // Clear any existing content in the container
     container.innerHTML = '';
 
-    // Loop to create the desired number of boxes
     for (let i = 0; i < numBoxes; i++) {
-        // Create a new div with a random country class
         const randomCountry = countries[Math.floor(Math.random() * countries.length)];
+
+        // Create USA background span
+        const usa = document.createElement('span');
+        usa.classList.add('usa');
+        usa.textContent = `${getRandomWord(usaText)}`;
+
+        // Create the box
         const box = document.createElement('div');
         box.classList.add('Box', randomCountry);
 
-        // Append the box to the container
-        container.appendChild(box);
+        // Place both at the same position
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('box-wrapper');
+        wrapper.appendChild(usa);
+        wrapper.appendChild(box);
 
-        // Update the content and styles of the box
+        container.appendChild(wrapper);
+
         updateBoxContentForCountry(box, randomCountry);
     }
 }
+
 
 // Function to update the content and styles of each box based on its country class
 function updateBoxContentForCountry(box, country) {
@@ -103,10 +91,12 @@ function updateBoxContentForCountry(box, country) {
 
     // Update the content of the box
     box.innerHTML = `<h1>${randomText}</h1>`;
+    
     box.style.backgroundColor = randomColors[0]; // Set random background color
     box.style.color = randomColors[1]; // Set random text color
     box.style.webkitTextStroke = `0px ${randomColors[2]}`; // Set random text stroke color
     box.style.textShadow = `0px 1px 0px ${randomColors[2]}, 0px 2px 0px ${randomColors[2]}, 0px 3px 0px ${randomColors[2]}, 0px 4px 0px ${randomColors[2]}, 0px 5px 0px ${randomColors[2]}, 0px 6px 0px ${randomColors[2]}`; // Set text shadow
+    box.style.zIndex = `${Math.floor(Math.random() * 3)}`;
 }
 
 // Call the function to generate a certain number of boxes (e.g., 10)
@@ -124,6 +114,8 @@ function getDistance(x1, y1, x2, y2) {
 // Function to update the scale of boxes based on mouse distance
 function updateBoxScales(mouseX, mouseY) {
     const boxes = document.querySelectorAll('.Box');
+    const usas = document.querySelectorAll('.usa');
+
     boxes.forEach(box => {
         const rect = box.getBoundingClientRect();
         const boxCenterX = rect.left + rect.width / 2;
@@ -133,47 +125,39 @@ function updateBoxScales(mouseX, mouseY) {
 
         // Calculate scale based on distance (closer = smaller)
         // Min scale = 0.5, Max scale = 1
-        const maxDistance = 1000; // Maximum distance for full scale
+        const maxDistance = 1300/2.5; // Maximum distance for full scale
         const minScale = 0;
-        const maxScale = 1.25;
+        const maxScale = 1.5;
         
         // Scale formula: Closer = Smaller
         let scale = maxScale - ((maxScale - minScale) * (1 - Math.min(distance / maxDistance, 1)));
 
         box.style.transform = `scale(${scale})`;
 
-        if (distance < 300) {
+        if (distance < 400/2.5) {
             box.style.transform = 'scale(0.0)';
         }
     });
+
+    usas.forEach(usa => {
+        const rect = usa.getBoundingClientRect();
+        const boxCenterX = rect.left + rect.width / 2;
+        const boxCenterY = rect.top + rect.height / 2;  
+        
+        const distance = getDistance(mouseX, mouseY, boxCenterX, boxCenterY);
+
+        usa.style.transform = `scale(0.0) translate(-50%, -50%)`;
+
+        if (distance < 400/2.5) {
+            usa.style.transform = 'scale(1.0) translate(-50%, -50%)';
+        }
+    });
+
 }
 
-// Event listener for mouse movement
+// Event listener for mouse movemen
 document.addEventListener('mousemove', (event) => {
     const mouseX = event.clientX;
     const mouseY = event.clientY;
     updateBoxScales(mouseX, mouseY);
-});
-
-// Get the element with id 'usa'
-let cursor = document.getElementById('usa');
-
-// Listen for mouse movement events
-document.addEventListener('mousemove', (event) => {
-    // Get the mouse coordinates (relative to the viewport)
-    const mouseX = event.clientX + window.scrollX; // Add scrollX to account for horizontal scroll
-    const mouseY = event.clientY + window.scrollY; // Add scrollY to account for vertical scroll
-
-    // Update the position of the 'usa' element
-    cursor.style.left = `${mouseX}px`;
-    cursor.style.top = `${mouseY}px`;
-
-    // Get the dimensions of the #usa element
-    const usaElement = document.getElementById('usa');
-    const usaWidth = usaElement.offsetWidth;
-    const usaHeight = usaElement.offsetHeight;
-
-    // Update the position of the 'usa' element
-    usaElement.style.left = `${mouseX - usaWidth / 2}px`; // Subtract half the width
-    usaElement.style.top = `${mouseY - usaHeight / 2}px`; // Subtract half the height
 });

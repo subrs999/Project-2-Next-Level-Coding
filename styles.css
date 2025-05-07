@@ -13,9 +13,17 @@
     flex-wrap: wrap;
     justify-content: space-between;
     overflow: hidden;
+    scale: .4;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    transform: translate(-30%, -75%);
 }
 
 .Box{
+    position: relative;
+    overflow: hidden;
+
     float:left;
 
     font-family: "Rubik", serif;
@@ -62,33 +70,24 @@
     text-shadow: 0px 1px 0px #009736, 0px 2px 0px #009736, 0px 3px 0px #009736, 0px 4px 0px #009736, 0px 5px 0px #009736, 0px 6px 0px #009736;
 }
 
-#usa{
+.box-wrapper {
+    position: relative;
+    width: auto;
+    height: auto;
+    margin: 0px 2.5px 0 2.5px;
+    padding: 0;
+}
+
+.box-wrapper .usa {
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
-    background-color: #000000;
-    width: 500px;
-    height: 500px;
-    border-radius: 100%;
-    position: absolute;
-
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
-
-    transition-property: transform, opacity;
-    transition-duration: 1s;
-    transition-timing-function: ease-out;
-}
-
-#usa h1{
     font-family: "Times New Roman", serif;
-    font-weight: 400;
-    font-size: 24px;
-    color: #ffffff;
-    width: 150px;
+    font-size: 22px;
+    color: rgba(255, 255, 255);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    transition: ease-out .5s;
 }
